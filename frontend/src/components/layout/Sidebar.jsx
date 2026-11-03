@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
   LayoutDashboard,
   Globe,
@@ -11,10 +11,11 @@ import {
   Settings,
   Shield,
   X,
+  Home,
 } from 'lucide-react';
 
 const navigation = [
-  { name: 'Dashboard', to: '/', icon: LayoutDashboard },
+  { name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
   { name: 'URL Scanner', to: '/scanner/url', icon: Globe },
   { name: 'Message Scanner', to: '/scanner/message', icon: MessageSquare },
   { name: 'Phone Scanner', to: '/scanner/phone', icon: Phone },
@@ -43,14 +44,14 @@ export default function Sidebar({ isOpen, onClose }) {
       >
         {/* Brand Header */}
         <div className="h-14 flex items-center justify-between px-5 border-b border-white/10">
-          <div className="flex items-center gap-2.5">
+          <Link to="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
             <div className="w-7 h-7 rounded-lg bg-[#059669] flex items-center justify-center text-white">
               <Shield className="w-4 h-4" />
             </div>
             <span className="font-semibold text-sm tracking-tight text-white">
               ScamShield<span className="text-[#10B981] font-normal"> AI</span>
             </span>
-          </div>
+          </Link>
 
           <button
             onClick={onClose}
@@ -63,6 +64,16 @@ export default function Sidebar({ isOpen, onClose }) {
 
         {/* Navigation Links */}
         <div className="flex-1 px-3 py-4 overflow-y-auto space-y-0.5">
+          <div className="mb-2 px-3">
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-[11px] font-medium text-emerald-200/80 hover:text-white transition-colors"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>← Back to Public Website</span>
+            </Link>
+          </div>
+
           <nav className="space-y-0.5">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -70,7 +81,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <NavLink
                   key={item.name}
                   to={item.to}
-                  end={item.to === '/'}
+                  end={item.to === '/dashboard'}
                   onClick={onClose}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${

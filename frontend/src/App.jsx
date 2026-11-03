@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
 import AppLayout from './components/layout/AppLayout';
 import Dashboard from './pages/Dashboard';
 import UrlScanner from './pages/UrlScanner';
@@ -14,20 +15,20 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Homepage (Landing Page) */}
+        <Route path="/" element={<Home />} />
+
+        {/* Enterprise Threat Dashboard */}
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <AppLayout title="Dashboard">
               <Dashboard />
             </AppLayout>
           }
         />
-        <Route
-          path="/dashboard"
-          element={
-            <Navigate to="/" replace />
-          }
-        />
+
+        {/* Dedicated Scanners */}
         <Route
           path="/scanner/url"
           element={
@@ -60,6 +61,8 @@ export default function App() {
             </AppLayout>
           }
         />
+
+        {/* Audit Log, Telemetry Analytics & Settings */}
         <Route
           path="/history"
           element={
@@ -84,12 +87,9 @@ export default function App() {
             </AppLayout>
           }
         />
-        <Route
-          path="*"
-          element={
-            <Navigate to="/" replace />
-          }
-        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

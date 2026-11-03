@@ -718,10 +718,6 @@ async function deleteHistoryItem(id) {
 
     if (!id) return;
 
-    if (!confirm("Are you sure you want to delete this scan record?")) {
-        return;
-    }
-
     try {
 
         const response = await fetch(`${HISTORY_ENDPOINT}/${id}`, {
@@ -738,7 +734,7 @@ async function deleteHistoryItem(id) {
 
         }
 
-        showToast("Scan record deleted!");
+        showToast("Scan deleted successfully");
 
         // Optimistically update local state and re-render
         scanHistory = scanHistory.filter(item => (item._id || item.id) !== id);
@@ -770,44 +766,40 @@ document.getElementById("clearHistory").addEventListener("click", async () => {
 
     }
 
-    if (confirm("Are you sure you want to clear all scan history?")) {
+    try {
 
-        try {
+        const response = await fetch(HISTORY_ENDPOINT, {
+            method: "DELETE"
+        });
 
-            const response = await fetch(HISTORY_ENDPOINT, {
-                method: "DELETE"
-            });
+        if (!response.ok) {
 
-            if (!response.ok) {
-
-                if (response.status === 404 || response.status === 405) {
-                    showToast("Clear all history is not supported by backend.");
-                    return;
-                }
-
-                const errData = await response.json().catch(() => ({}));
-
-                throw new Error(
-                    errData.message || "Failed to clear history"
-                );
-
+            if (response.status === 404 || response.status === 405) {
+                showToast("Clear all history is not supported by backend.");
+                return;
             }
 
-            scanHistory = [];
+            const errData = await response.json().catch(() => ({}));
 
-            renderHistory();
-
-            renderRecent();
-
-            showToast("Scan history cleared successfully!");
-
-        } catch (error) {
-
-            console.error("Clear all history error:", error);
-
-            showToast(error.message || "Failed to clear history");
+            throw new Error(
+                errData.message || "Failed to clear history"
+            );
 
         }
+
+        scanHistory = [];
+
+        renderHistory();
+
+        renderRecent();
+
+        showToast("Scan history cleared successfully");
+
+    } catch (error) {
+
+        console.error("Clear all history error:", error);
+
+        showToast(error.message || "Failed to clear history");
 
     }
 
