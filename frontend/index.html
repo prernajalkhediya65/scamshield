@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScamShield AI | Online Safety</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app">
+
+     
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">✓</div>
+                <div>
+                    <h2>scam<span>shield</span></h2>
+                    <small>AI SECURITY</small>
+                </div>
+            </div>
+
+            <p class="menu-title">WORKSPACE</p>
+
+            <nav>
+                <a href="#" class="nav-link active" data-view="home">⌂ Overview</a>
+                <a href="#" class="nav-link" data-view="scanner">⌕ Scam Scanner</a>
+                <a href="#" class="nav-link" data-view="history">◷ Scan History</a>
+                <a href="#" class="nav-link" data-view="safety">◇ Safety Tips</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="help-box">
+                    <h4>Stay one step ahead.</h4>
+                    <p>Pause, check and then proceed. Your online safety starts with you.</p>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar">S</div>
+                    <div>
+                        <b>Student Mode</b>
+                        <small>Personal Workspace</small>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+
+       
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <button class="menu-toggle" id="menuToggle">☰</button>
+
+                <div class="breadcrumb">
+                    Workspace / <b id="pageName">Overview</b>
+                </div>
+
+                <div class="top-status">
+                    <span class="online-dot"></span>
+                    Protection Workspace
+                </div>
+
+            </header>
+
+
+           
+
+            <section class="page active" id="home">
+
+                <div class="welcome">
+                    <div>
+                        <p class="eyebrow">YOUR DIGITAL SAFETY DESK</p>
+
+                        <h1>Think before you click<span>.</span></h1>
+
+                        <p class="subtitle">
+                            A quick check today can save you from a costly mistake tomorrow.
+                        </p>
+                    </div>
+                </div>
+
+
+              
+
+                <div class="hero">
+
+                    <div class="hero-content">
+
+                        <p class="hero-tag">✦ SMARTER ONLINE DECISIONS</p>
+
+                        <h2>
+                            Not sure about that<br>
+                            <span>link or message?</span>
+                        </h2>
+
+                        <p>
+                            Drop it here. ScamShield helps you spot common warning
+                            signs before you take the next step.
+                        </p>
+
+                        <button class="primary-button" id="startScan">
+                            Check something now →
+                        </button>
+
+                    </div>
+
+                    <div class="hero-graphic">
+                        <div class="shield">✓</div>
+                        <div class="floating-card">
+                            ● Link Check <b>Ready</b>
+                        </div>
+                    </div>
+
+                </div>
+
+
+             
+
+                <div class="section-heading">
+                    <div>
+                        <h3>What would you like to check?</h3>
+                        <p>Choose a scan type to get started.</p>
+                    </div>
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <div class="quick-card" data-mode="url">
+                        <div class="quick-icon blue">↗</div>
+                        <div>
+                            <h4>Suspicious URL</h4>
+                            <p>Check a website or link</p>
+                        </div>
+                        <span>→</span>
+                    </div>
+
+                    <div class="quick-card" data-mode="message">
+                        <div class="quick-icon purple">▤</div>
+                        <div>
+                            <h4>Text or Message</h4>
+                            <p>Review SMS, DM or email</p>
+                        </div>
+                        <span>→</span>
+                    </div>
+
+                    <div class="quick-card" data-mode="offer">
+                        <div class="quick-icon orange">％</div>
+                        <div>
+                            <h4>Online Offer</h4>
+                            <p>Check suspicious deals</p>
+                        </div>
+                        <span>→</span>
+                    </div>
+
+                </div>
+
+
+                
+
+                <div class="bottom-grid">
+
+                    <div class="content-card">
+
+                        <div class="card-heading">
+                            <div>
+                                <h3>Recent Activity</h3>
+                                <p>Your latest checks appear here.</p>
+                            </div>
+
+                            <button class="text-button" data-view="history">
+                                View History →
+                            </button>
+                        </div>
+
+                        <div id="recentList">
+                            <div class="empty-state">
+                                <h4>No scans yet</h4>
+                                <p>Your recent checks will appear here.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="tip-card">
+                        <p>✦ QUICK SAFETY NOTE</p>
+                        <h3>Urgency is a red flag.</h3>
+                        <p>
+                            Scam messages often pressure you to act immediately.
+                            Take a breath and verify through an official channel.
+                        </p>
+
+                        <button class="text-button" data-view="safety">
+                            More Safety Tips →
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            
+
+            <section class="page" id="scanner">
+
+                <p class="eyebrow">SCAM SCANNER</p>
+
+                <h1>Let's check that<span>.</span></h1>
+
+                <p class="subtitle">
+                    Paste the link, message or offer you want to review.
+                </p>
+
+
+                <div class="scanner-layout">
+
+                    <div class="content-card scanner-card">
+
+                        <div class="scanner-tabs">
+
+                            <button class="scanner-tab active" data-mode="url">
+                                ↗ Website Link
+                            </button>
+
+                            <button class="scanner-tab" data-mode="message">
+                                ▤ Message
+                            </button>
+
+                            <button class="scanner-tab" data-mode="offer">
+                                ％ Offer
+                            </button>
+
+                        </div>
+
+
+                        <form id="scanForm">
+
+                            <label id="inputLabel">
+                                Paste the website URL
+                            </label>
+
+                            <textarea id="scanInput" placeholder="https://example.com" maxlength="5000"
+                                required></textarea>
+
+                            <div class="input-info">
+                                <span id="inputHint">
+                                    Include the complete link starting with https://
+                                </span>
+
+                                <span id="charCount">0 / 5000</span>
+                            </div>
+
+
+                            <div class="privacy-note">
+                                ⌑ Avoid sharing passwords, OTPs or private details.
+                            </div>
+
+
+                            <button class="primary-button scan-button" type="submit" id="analyzeBtn">
+                                Analyze with ScamShield →
+                            </button>
+
+                            <p class="disclaimer">
+                                Analysis is a helpful signal, not a guarantee.
+                                Always verify important requests independently.
+                            </p>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="scanner-info">
+
+                        <div class="content-card">
+
+                            <h3>What happens next?</h3>
+
+                            <div class="step">
+                                <b>01</b>
+                                <div>
+                                    <strong>Share the content</strong>
+                                    <p>Paste a URL or message above.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <b>02</b>
+                                <div>
+                                    <strong>We review signals</strong>
+                                    <p>The connected service checks warning signs.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <b>03</b>
+                                <div>
+                                    <strong>Understand the result</strong>
+                                    <p>Review the risk level and next steps.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="warning-box">
+                            <b>!</b>
+                            <p>
+                                Never share OTPs, UPI PINs or passwords with anyone.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESULT -->
+
+                <div class="content-card result-card hidden" id="resultPanel"></div>
+
+            </section>
+
+
+           
+
+            <section class="page" id="history">
+
+                <h1>Scan History<span>.</span></h1>
+
+                <p class="subtitle">
+                    Your previous checks in this browser.
+                </p>
+
+                <div class="content-card">
+
+                    <div class="card-heading">
+                        <h3>Previous Scans</h3>
+
+                        <button class="text-button" id="clearHistory">
+                            Clear History
+                        </button>
+                    </div>
+
+                    <div id="historyList"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SAFETY TIPS PAGE -->
+
+            <section class="page" id="safety">
+
+                <h1>Stay scam-aware<span>.</span></h1>
+
+                <p class="subtitle">
+                    Small habits can make your online life safer.
+                </p>
+
+                <div class="tips-grid">
+
+                    <div class="content-card">
+                        <div class="tip-icon">↗</div>
+                        <h3>Look closely at URLs.</h3>
+                        <p>Check spelling, unusual domains and shortened links.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="tip-icon">⌑</div>
+                        <h3>Keep codes private.</h3>
+                        <p>Never share OTPs, UPI PINs or passwords.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="tip-icon">◷</div>
+                        <h3>Don't rush decisions.</h3>
+                        <p>Urgent threats and countdowns are common scam tactics.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="tip-icon">◎</div>
+                        <h3>Verify before payment.</h3>
+                        <p>Check sellers and payment details independently.</p>
+                    </div>
+
+                </div>
+
+                <div class="warning-box emergency">
+                    <b>!</b>
+                    <p>
+                        In India, report cyber financial fraud by calling 1930
+                        or visiting cybercrime.gov.in.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <footer>
+                <span>© 2026 ScamShield AI</span>
+                <span>Stay alert. Stay safe.</span>
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
