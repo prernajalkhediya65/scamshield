@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import AppLayout from './components/layout/AppLayout';
 import Dashboard from './pages/Dashboard';
 import UrlScanner from './pages/UrlScanner';
@@ -13,84 +17,104 @@ import Settings from './pages/Settings';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Homepage (Landing Page) */}
-        <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Enterprise Threat Dashboard */}
-        <Route
-          path="/dashboard"
-          element={
-            <AppLayout title="Dashboard">
-              <Dashboard />
-            </AppLayout>
-          }
-        />
+          {/* Enterprise Threat Dashboard (Protected) */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Dashboard">
+                  <Dashboard />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Dedicated Scanners */}
-        <Route
-          path="/scanner/url"
-          element={
-            <AppLayout title="URL Scanner">
-              <UrlScanner />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/scanner/message"
-          element={
-            <AppLayout title="Message Scanner">
-              <MessageScanner />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/scanner/phone"
-          element={
-            <AppLayout title="Phone Scanner">
-              <PhoneScanner />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/scanner/offer"
-          element={
-            <AppLayout title="Offer Detector">
-              <OfferScanner />
-            </AppLayout>
-          }
-        />
+          {/* Dedicated Scanners (Protected) */}
+          <Route
+            path="/scanner/url"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="URL Scanner">
+                  <UrlScanner />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scanner/message"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Message Scanner">
+                  <MessageScanner />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scanner/phone"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Phone Scanner">
+                  <PhoneScanner />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scanner/offer"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Offer Detector">
+                  <OfferScanner />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Audit Log, Telemetry Analytics & Settings */}
-        <Route
-          path="/history"
-          element={
-            <AppLayout title="Scan History">
-              <ScanHistory />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/analytics"
-          element={
-            <AppLayout title="Analytics">
-              <Analytics />
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <AppLayout title="Settings">
-              <Settings />
-            </AppLayout>
-          }
-        />
+          {/* Audit Log, Telemetry Analytics & Settings (Protected) */}
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Scan History">
+                  <ScanHistory />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Analytics">
+                  <Analytics />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <AppLayout title="Settings">
+                  <Settings />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

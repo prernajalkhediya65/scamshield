@@ -1,12 +1,17 @@
 const Scan = require("../models/Scan");
 const analyzeScam = require("../services/geminiService");
+const mongoose = require("mongoose");
 
 const analyzeScamController = async (req, res) => {
     try {
         const { type, content } = req.body;
 
-        // Validate input
-        if (!type || !content) {
+        // Input validation
+        if (
+            typeof type !== "string" ||
+            typeof content !== "string" ||
+            !content.trim()
+        ) {
             return res.status(400).json({
                 message: "Type and content are required"
             });
@@ -18,16 +23,47 @@ const analyzeScamController = async (req, res) => {
             });
         }
 
+     
+        const cleanContent = content.trim();
+
+        if (cleanContent.length > 5000) {
+            return res.status(400).json({
+                message: "Content cannot exceed 5000 characters"
+            });
+        }
+
         // Gemini AI analysis
-        const aiResponse = await analyzeScam(type, content);
+        const aiResponse = await analyzeScam(type, cleanContent);
 
-        // Convert AI response into JavaScript object
-        const result = JSON.parse(aiResponse);
+        let result;
 
-        // Save result in MongoDB
+        try {
+            result = JSON.parse(aiResponse);
+        } catch (error) {
+            return res.status(502).json({
+                message: "AI returned an invalid response"
+            });
+        }
+
+  
+        if (
+            !result ||
+            typeof result !== "object" ||
+            !["LOW", "MEDIUM", "HIGH"].includes(result.riskLevel) ||
+            typeof result.explanation !== "string" ||
+            !Array.isArray(result.reasons) ||
+            !result.reasons.every(reason => typeof reason === "string") ||
+            typeof result.recommendation !== "string"
+        ) {
+            return res.status(502).json({
+                message: "AI returned an incomplete or invalid response"
+            });
+        }
+
         const newScan = await Scan.create({
+            userId: req.user._id,
             type,
-            content,
+            content: cleanContent,
             riskLevel: result.riskLevel,
             explanation: result.explanation,
             reasons: result.reasons,
@@ -39,33 +75,48 @@ const analyzeScamController = async (req, res) => {
     } catch (error) {
         console.error("Scam Analysis Error:", error);
 
+        if (error.message && error.message.includes("timed out")) {
+            return res.status(504).json({
+                message: "AI analysis timed out. Please try again."
+            });
+        }
+
         return res.status(500).json({
-            message: "Scam analysis failed",
-            error: error.message
+            message: "Scam analysis failed. Please try again later."
         });
     }
 };
-// Get all scan history
+
 const getHistoryController = async (req, res) => {
     try {
-        const history = await Scan.find().sort({ createdAt: -1 });
+        const history = await Scan.find({
+            userId: req.user._id
+        }).sort({ createdAt: -1 });
 
         return res.status(200).json(history);
+
     } catch (error) {
+        console.error("Fetch Scan History Error:", error);
         return res.status(500).json({
-            message: "Failed to fetch scan history",
-            error: error.message
+            message: "Failed to fetch scan history. Please try again later."
         });
     }
 };
 
-
-// Delete one history record
 const deleteHistoryItemController = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const deletedScan = await Scan.findByIdAndDelete(id);
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                message: "Invalid scan ID"
+            });
+        }
+
+        const deletedScan = await Scan.findOneAndDelete({
+            _id: id,
+            userId: req.user._id
+        });
 
         if (!deletedScan) {
             return res.status(404).json({
@@ -77,32 +128,35 @@ const deleteHistoryItemController = async (req, res) => {
             message: "Scan deleted successfully",
             id
         });
+
     } catch (error) {
+        console.error("Delete Scan Record Error:", error);
         return res.status(500).json({
-            message: "Failed to delete scan record",
-            error: error.message
+            message: "Failed to delete scan record. Please try again later."
         });
     }
 };
 
-
-// Delete all history
 const clearHistoryController = async (req, res) => {
     try {
-        await Scan.deleteMany({});
+        await Scan.deleteMany({
+            userId: req.user._id
+        });
 
         return res.status(200).json({
-            message: "All scan history cleared successfully"
+            message: "Your scan history cleared successfully"
         });
+
     } catch (error) {
+        console.error("Clear Scan History Error:", error);
         return res.status(500).json({
-            message: "Failed to clear scan history",
-            error: error.message
+            message: "Failed to clear scan history. Please try again later."
         });
     }
 };
 
-module.exports = { analyzeScamController,
+module.exports = {
+    analyzeScamController,
     getHistoryController,
     deleteHistoryItemController,
     clearHistoryController

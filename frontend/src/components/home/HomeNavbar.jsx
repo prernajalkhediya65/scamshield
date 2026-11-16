@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Shield, Menu, X, ArrowRight, LayoutDashboard, Globe, MessageSquare, Phone, Tag } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Shield, Menu, X, ArrowRight, LayoutDashboard, LogIn, UserPlus, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 export default function HomeNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0]">
@@ -44,22 +46,50 @@ export default function HomeNavbar() {
           </nav>
 
           {/* Action CTAs */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              to="/dashboard"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-[#172B24] hover:bg-slate-100 rounded-lg transition-colors border border-transparent hover:border-[#E2E8F0]"
-            >
-              <LayoutDashboard className="w-3.5 h-3.5 text-slate-500" />
-              <span>Console</span>
-            </Link>
+          <div className="hidden md:flex items-center gap-2.5">
+            {user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-[#172B24] hover:bg-slate-100 rounded-lg transition-colors border border-transparent hover:border-[#E2E8F0]"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Dashboard</span>
+                </Link>
 
-            <Link
-              to="/scanner/message"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors"
-            >
-              <span>Start Scanning</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+                <div className="flex items-center gap-2 pl-2 border-l border-[#E2E8F0]">
+                  <span className="text-xs font-semibold text-[#172B24] max-w-[120px] truncate">
+                    {user.name}
+                  </span>
+                  <button
+                    onClick={logout}
+                    className="p-1 text-slate-400 hover:text-rose-600 transition-colors"
+                    title="Sign out"
+                    aria-label="Sign out"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-[#059669] rounded-lg transition-colors"
+                >
+                  <LogIn className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Sign In</span>
+                </Link>
+
+                <Link
+                  to="/register"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors"
+                >
+                  <UserPlus className="w-3.5 h-3.5" />
+                  <span>Get Started</span>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -117,24 +147,49 @@ export default function HomeNavbar() {
           </nav>
 
           <div className="pt-3 border-t border-[#E2E8F0] flex flex-col gap-2">
-            <Link
-              to="/dashboard"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-2 px-3 text-xs font-semibold text-slate-700 bg-slate-50 border border-[#E2E8F0] rounded-lg"
-            >
-              Open Threat Console
-            </Link>
-            <Link
-              to="/scanner/message"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-2 px-3 text-xs font-semibold text-white bg-[#059669] hover:bg-[#047857] rounded-lg shadow-2xs"
-            >
-              Start Free Scan
-            </Link>
+            {user ? (
+              <>
+                <div className="px-2 py-1 flex items-center justify-between text-xs text-slate-500">
+                  <span>Signed in as <strong>{user.name}</strong></span>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="text-rose-600 font-medium"
+                  >
+                    Sign out
+                  </button>
+                </div>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2 px-3 text-xs font-semibold text-white bg-[#059669] hover:bg-[#047857] rounded-lg shadow-2xs"
+                >
+                  Open Dashboard Console
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2 px-3 text-xs font-semibold text-slate-700 bg-slate-50 border border-[#E2E8F0] rounded-lg"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2 px-3 text-xs font-semibold text-white bg-[#059669] hover:bg-[#047857] rounded-lg shadow-2xs"
+                >
+                  Create Account
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
     </header>
   );
 }
-

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Search } from 'lucide-react';
+import ProfileDropdown from './ProfileDropdown';
 
 export default function Topbar({ onOpenSidebar, title = 'Dashboard' }) {
   return (
@@ -30,16 +31,9 @@ export default function Topbar({ onOpenSidebar, title = 'Dashboard' }) {
         </div>
       </div>
 
-      {/* Right: Minimal User Profile */}
+      {/* Right: Dynamic User Profile Dropdown */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md bg-[#064E3B] text-white text-xs font-medium flex items-center justify-center">
-            SS
-          </div>
-          <span className="text-xs font-medium text-[#172B24] hidden sm:inline">
-            Security Team
-          </span>
-        </div>
+        <ProfileDropdown />
       </div>
     </header>
   );
