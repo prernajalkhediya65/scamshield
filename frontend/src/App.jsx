@@ -22,14 +22,14 @@ export default function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          { <Route path="/login" element={<Login />} /> }
+          { <Route path="/register" element={<Register />} /> }
 
           {/* Enterprise Threat Dashboard (Protected) */}
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Dashboard">
                   <Dashboard />
                 </AppLayout>
@@ -45,37 +45,37 @@ export default function App() {
                 <AppLayout title="URL Scanner">
                   <UrlScanner />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
           <Route
             path="/scanner/message"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Message Scanner">
                   <MessageScanner />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
           <Route
             path="/scanner/phone"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Phone Scanner">
                   <PhoneScanner />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
           <Route
             path="/scanner/offer"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Offer Detector">
                   <OfferScanner />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
 
@@ -83,31 +83,31 @@ export default function App() {
           <Route
             path="/history"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Scan History">
                   <ScanHistory />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
           <Route
             path="/analytics"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Analytics">
                   <Analytics />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
           <Route
             path="/settings"
             element={
-              <ProtectedRoute>
+               <ProtectedRoute>
                 <AppLayout title="Settings">
                   <Settings />
                 </AppLayout>
-              </ProtectedRoute>
+               </ProtectedRoute>
             }
           />
 
