@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const AUTH_BASE_URL = 'http://localhost:8080/api/auth';
+const AUTH_BASE_URL = 'https://scamshield-m0yf.onrender.com';
 
 const authClient = axios.create({
   baseURL: AUTH_BASE_URL,
