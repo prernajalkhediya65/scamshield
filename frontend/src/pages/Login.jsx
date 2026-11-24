@@ -58,6 +58,10 @@ export default function Login() {
         setError('Too many login attempts. Please wait 15 minutes before trying again.');
       } else if (err.response?.status === 401) {
         setError('Invalid email or password. Please check your credentials.');
+      } else if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        setError('The server is taking longer to respond (Render free instances may take ~50s to wake up). Please try again in a few seconds.');
+      } else if (err.message === 'Network Error' || err.code === 'ERR_NETWORK') {
+        setError('Unable to reach security server. The backend instance may be waking up from sleep. Please wait 15-30 seconds and try again.');
       } else {
         const msg = err.response?.data?.message || err.message || 'Unable to sign in. Please try again.';
         setError(msg);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api/scams';
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://scamshield-m0yf.onrender.com').replace(/\/+$/, '');
+const API_BASE_URL = `${API_BASE}/api/scams`;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -8,7 +9,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true, // Required for cookie-based authentication
-  timeout: 30000, // 30s timeout for AI analysis
+  timeout: 60000, // 60s timeout to accommodate Render cold starts & AI analysis
 });
 
 export const scamApi = {

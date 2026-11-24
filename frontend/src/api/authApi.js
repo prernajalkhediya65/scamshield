@@ -1,7 +1,8 @@
 
 import axios from 'axios';
 
-const AUTH_BASE_URL = 'https://scamshield-m0yf.onrender.com/api/auth';
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://scamshield-m0yf.onrender.com').replace(/\/+$/, '');
+const AUTH_BASE_URL = `${API_BASE}/api/auth`;
 
 const authClient = axios.create({
   baseURL: AUTH_BASE_URL,
@@ -9,7 +10,7 @@ const authClient = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
-  timeout: 30000,
+  timeout: 60000, // 60s timeout to accommodate Render cold starts
 });
 
 export const authApi = {
